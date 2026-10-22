@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Train the model artifact
+        run: python -m scripts.train
+
+      - name: Run tests
+        run: pytest -q
+
+      - name: Smoke-test the API
+        run: |
+          uvicorn app.main:app --port 8000 &
+          sleep 5
+          curl --fail --silent http://127.0.0.1:8000/api/health
+          curl --fail --silent -X POST http://127.0.0.1:8000/api/predict \
+            -H "Content-Type: application/json" \
+            -d '{"text":"absolutely brilliant, works perfectly"}'

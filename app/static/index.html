@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SentimentScope · by Debraj</title>
+  <meta name="description" content="SentimentScope — an offline sentiment analysis playground built with FastAPI and scikit-learn. Author: Debraj." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>" />
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/">
+      <span class="brand-mark">◑</span>
+      <span class="brand-text">Sentiment<em>Scope</em></span>
+    </a>
+    <nav class="site-nav">
+      <a href="/docs" target="_blank" rel="noopener">API docs</a>
+      <a href="/api/model" target="_blank" rel="noopener">Model card</a>
+      <a href="/api/health" target="_blank" rel="noopener">Health</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Python · FastAPI · scikit-learn</p>
+      <h1>Read the mood of any sentence <span class="grad">in milliseconds</span>.</h1>
+      <p class="lede">
+        A tiny transformer-free model — TF-IDF plus logistic regression — trained on a
+        bundled dataset. It runs fully offline, explains itself token by token, and
+        answers 50 sentences in a single request.
+      </p>
+      <div class="badges">
+        <span class="badge" id="badge-health">checking model…</span>
+        <span class="badge" id="badge-vocab">vocabulary —</span>
+        <span class="badge" id="badge-acc">accuracy —</span>
+      </div>
+    </section>
+
+    <section class="card lab" aria-labelledby="lab-title">
+      <h2 id="lab-title" class="sr-only">Classify text</h2>
+
+      <label class="field-label" for="input">Your sentence</label>
+      <textarea id="input" rows="4" maxlength="2000"
+        placeholder="e.g. the update fixed everything and it feels much smoother now">the update fixed everything and it feels much smoother now</textarea>
+
+      <div class="chips" id="examples" aria-label="Example sentences"></div>
+
+      <div class="controls">
+        <span class="counter"><span id="char-count">0</span>/2000</span>
+        <div class="controls-right">
+          <kbd>⌘</kbd><kbd>↵</kbd>
+          <button id="run" class="btn btn-primary">Analyse</button>
+        </div>
+      </div>
+
+      <div id="error" class="error" hidden></div>
+    </section>
+
+    <section id="result" class="card result" hidden aria-live="polite">
+      <div class="result-head">
+        <div class="verdict">
+          <span class="dot" id="verdict-dot"></span>
+          <span id="verdict-label">—</span>
+        </div>
+        <div class="meta" id="result-meta">—</div>
+      </div>
+
+      <div class="bars" id="bars"></div>
+
+      <div class="explain">
+        <h3>Why this label?</h3>
+        <p class="hint">Token contributions weighted by the model coefficient — teal pushes
+          toward <em id="explain-label">the predicted</em>, red pushes away.</p>
+        <div class="tokens" id="tokens"></div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card mini">
+        <h3>Fully offline</h3>
+        <p>The <code>model.joblib</code> artifact ships with the repo. No API keys, no
+          network calls, no GPU. Clone it and it runs.</p>
+      </article>
+      <article class="card mini">
+        <h3>Explainable</h3>
+        <p>Every prediction returns the exact tokens that moved the decision, so the
+          output is auditable rather than a black box.</p>
+      </article>
+      <article class="card mini">
+        <h3>Typed contract</h3>
+        <p>Pydantic schemas drive validation <em>and</em> the interactive OpenAPI docs at
+          <code>/docs</code>.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      <strong>SentimentScope</strong> — built and maintained by <span class="author">Debraj</span>.
+      Licensed under MIT.
+    </p>
+    <p class="fineprint">FastAPI · scikit-learn · vanilla JS · zero external services</p>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
