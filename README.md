@@ -23,7 +23,7 @@ gives you a working classifier — plus a browser UI and interactive OpenAPI doc
 
 | | |
 |---|---|
-| **Offline by design** | Training data is bundled in `data/sentiment.csv` and regenerable from a fixed seed |
+| **Offline by design** | Training data is bundled in `data/sentiment.csv` and  it is regenerable from a fixed seed |
 | **Explainable** | Every prediction returns the tokens that moved the decision (tf-idf value × model coefficient) |
 | **Three classes** | `negative` / `neutral` / `positive` with calibrated probability scores |
 | **Fast** | Sub-millisecond inference; typical latency printed per request |
