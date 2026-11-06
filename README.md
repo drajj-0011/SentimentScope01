@@ -159,3 +159,56 @@ blank input is rejected, and that unknown vocabulary degrades gracefully instead
 MIT — see [LICENSE](LICENSE).
 
 Built and maintained by **Debraj**.
+
+
+
+## Project Structure
+
+```text
+SentimentScope01/
+│
+├── app/
+│   ├── static/
+│   ├── main.py
+│   ├── model.py
+│   ├── schemas.py
+│   └── __init__.py
+│
+├── data/
+├── artifacts/
+├── scripts/
+├── tests/
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+│
+├── requirements.txt
+└── README.md
+```
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/api/health` | Check API health |
+| POST | `/api/predict` | Predict sentiment from text |
+
+## Running Tests
+
+Run the following command to execute the test suite:
+
+```bash
+python -m pytest -q
+```
+
+## Continuous Integration
+
+This project uses GitHub Actions to automatically:
+
+- Test the application with Python 3.10, 3.11 and 3.12.
+- Install project dependencies.
+- Train the sentiment analysis model.
+- Run automated tests.
+- Perform API smoke tests.
+
+The workflow runs on pushes, pull requests and manual triggers.
